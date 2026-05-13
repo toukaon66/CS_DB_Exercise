@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CS_DB_Exercise.Infrastructures.Accessors;
+
 public class EmployeeAccessor
 {
- private readonly AppDbContext _context;
+    private readonly AppDbContext _context;
 
     /// <summary>
     /// コンストラクタ
@@ -41,8 +44,48 @@ public class EmployeeAccessor
     public List<EmployeeEntity> FindByContaintsName(string keyword)
     {
         var employees = _context.Employees
-            .Where(e=>e.Name!.Contains(keyword))
+            .Where(e => e.Name!.Contains(keyword))
             .ToList();
         return employees;
     }
+
+    public EmployeeEntity Create(EmployeeEntity employeeEntity)
+    {
+        var result = _context.Employees.Add(employeeEntity);
+        _context.SaveChanges();
+        return result.Entity;
+    }
+
+    public EmployeeEntity UpdateById(EmployeeEntity employeeEntity)
+    {
+        var result = _context.Employees.Find(employeeEntity.Id);
+        if (employeeEntity == null)
+        {
+            return null;
+        }
+        result!.Name=employeeEntity.Name;
+         _context.SaveChanges();
+        return employeeEntity;
+        }
+   public EmployeeEntity DeleteById(int id)
+    {
+        var employee = _context.Employees.Find(id);
+        if (employee != null)
+        {
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+        }
+        return employee;
+    }
+    public EmployeeEntity FindByNameJoinDepartment(string name)
+    {
+ 
+        var employee1 = _context.Employees
+            .Where(i => i.Name == name)
+            .Include(i => i.Department) // カテゴリを結合して取得する
+            .Single();
+        return employee1;
+
+    }
+    
 }

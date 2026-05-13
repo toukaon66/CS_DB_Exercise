@@ -17,6 +17,8 @@ namespace CS_DB_Exercise.Infrastructures.Entities
     public string? Name { get; set; }   // 従業員名
     [Column("dept_id")]
     public int DeptId { get; set; }     // 部署Id（外部キー）
+    [ForeignKey("DeptId")]
+    public DepartmentEntity? Department { get; set; }
 
     public override string ToString()
     {
