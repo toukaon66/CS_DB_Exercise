@@ -19,7 +19,7 @@ class Program
         // 演習-10 employeeテーブルの社員名を変更する
         // Exercise10(employeeAccessor);
         Console.Write("社員名を入力してください->");
-        string name1 = Console.ReadLine();
+        var name1 = Console.ReadLine();
         var employee = employeeAccessor.FindByNameJoinDepartment(name1);
         Console.WriteLine(employee);
         Console.WriteLine(employee.Department);

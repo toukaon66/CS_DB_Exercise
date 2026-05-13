@@ -63,11 +63,11 @@ public class EmployeeAccessor
         {
             return null;
         }
-        result!.Name=employeeEntity.Name;
-         _context.SaveChanges();
+        result!.Name = employeeEntity.Name;
+        _context.SaveChanges();
         return employeeEntity;
-        }
-   public EmployeeEntity DeleteById(int id)
+    }
+    public EmployeeEntity DeleteById(int id)
     {
         var employee = _context.Employees.Find(id);
         if (employee != null)
@@ -79,13 +79,25 @@ public class EmployeeAccessor
     }
     public EmployeeEntity FindByNameJoinDepartment(string name)
     {
- 
+
         var employee1 = _context.Employees
             .Where(i => i.Name == name)
             .Include(i => i.Department) // カテゴリを結合して取得する
-            .Single();
+            .FirstOrDefault();
         return employee1;
 
     }
-    
+    public List<EmployeeEntity>? FindByNameContainsJoinDepartment(string name)
+    {
+
+        var employee = _context.Employees
+        .Include(e => e.Department)
+        .Where(i => i.Name.Contains(name))
+        .ToList();
+        if (employee.Count == 0)
+        {
+            return null!;
+        }
+        return employee!;
+    }
 }
