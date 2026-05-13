@@ -10,14 +10,16 @@ namespace CS_DB_Exercise.Infrastructures.Contexts;
 
 public class AppDbContext : DbContext
 {
-    /// <summary>
+     /// <summary>
     /// departmentテーブルにマッピングされるDbSetプロパティ 
     /// </summary>
     public DbSet<DepartmentEntity> Departments { get; set; } = null!;
-     /// <summary>
+
+    /// <summary>
     /// employeeテーブルにマッピングされるDbSetプロパティ 
     /// </summary>
     public DbSet<EmployeeEntity> Employees { get; set; } = null!;
+
     /// <summary>
     /// DbContextの構成処理をする
     /// データベース接続情報の設定や、SQLログ出力の有効化する
@@ -43,6 +45,5 @@ public class AppDbContext : DbContext
         // - SQLに渡された値（例: "商品名 = '鉛筆'"）も確認できる
         // - デバッグ時は便利だが、個人情報などを扱う本番環境では使わない
         .EnableSensitiveDataLogging();
-
     }
 }

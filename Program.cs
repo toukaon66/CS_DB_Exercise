@@ -5,13 +5,14 @@ namespace CS_DB_Exercise;
 
 class Program
 {
+    
     static void Main(string[] args)
     {
         var accessor = new DepartmentAccessor(new AppDbContext());
         //DepartmentAccessorのインスタンス生成をする
         var departments = accessor.FindAll();
         Console.WriteLine("すべての部署を取得する");
-        foreach(var d in departments)
+        foreach (var d in departments)
         {
             Console.WriteLine(d);
         }
@@ -20,7 +21,7 @@ class Program
         Console.WriteLine($"存在する部署Id:{department!.ToString()}");
         //DepartmentAccessorのFindAllメソッドを呼ぶ
         //↑で取得したデータを出力する
-         // 指定した部署Idの部署を取得する(存在しない部署Id)
+        // 指定した部署Idの部署を取得する(存在しない部署Id)
         department = accessor.FindById(101);
         if (department == null)
         {
